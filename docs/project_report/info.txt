@@ -1,0 +1,180 @@
+The project report is an extremely important part of the project. It serves to
+show what you have achieved and should demonstrate that you:
+
+understand the wider context of computing by relating your choice of project,
+and the approach you take, to existing products or research;
+can apply the theoretical and practical techniques taught in the course to the
+problem you are addressing, and that you understand their relevance to the
+wider world of computing;
+are capable of evaluating and criticising your own work objectively and making
+constructive suggestions for improvements or further work based on your
+experiences so far; and
+can explain your thinking and working processes clearly and concisely to third
+parties who may not be experts in the field in which you are working.
+Your second marker will most likely not have followed the project throughout
+and will only have a short time to see a demonstration. For this reason they
+will rely heavily on the report to judge the quality of your work. You should
+also appreciate that the external examiner, who plays a crucial role in the
+final recommendation, has only the report by which to judge your project
+performance.
+
+Many students underestimate the importance of the report and make the mistake
+of thinking that top marks can be achieved simply for producing a good product.
+This is definitely not the case and many projects have been graded well below
+their potential because of an indifferent or poor write-up. In order to get the
+balance right, you should consider that the aim of the project is to produce a
+good report and that any software, hardware, theory, etc. that you develop
+during the project are merely a means to this end. Do not make the mistake of
+leaving the report to the last minute. Ideally, you should produce the bulk of
+the report as you go along and use the last week or two to bring it together
+into a coherent document.
+
+A project will not be awarded a distinction if its report is not of distinction
+quality, no matter how good the technical work is, and a project will not pass
+if its report is poor, even if the technical work is acceptable.
+
+    The physical layout and formatting of the report is also important, and yet
+    is very often neglected. A tidy, well laid out, and consistently formatted
+    document makes for easier reading and is suggestive of a careful and
+    professional attitude towards its preparation.
+
+    Remember that quantity does not equal quality. A 150-page report is not
+    twice as good as a 75-page one, nor a 10,000-line implementation twice as
+    good as a 5,000-line one. Conciseness, clarity, and elegance are invaluable
+    qualities in report writing, just as they are in programming, and will be
+    rewarded appropriately. Also, it is important to appreciate that the
+    appropriate size and structure of the report can vary significantly from
+    one project to the next. Despite these variations, however, most good
+    reports have the following components in common:
+
+    Format: The report must be printed and bound as specified here.
+
+    Title page: This has the standard form given here.
+
+    Abstract: The abstract is a very brief summary of the report's contents. It
+    should be about half page long. Somebody unfamiliar with your project
+    should have a good idea of what it is about having read the abstract alone
+    and will know whether it will be of interest to them.
+
+    Acknowledgements: It is usual to thank those individuals who have provided
+    particularly useful assistance, technical or otherwise, during your
+    project. Your supervisor will obviously be pleased to be acknowledged as
+    they will have invested quite a lot of time overseeing your progress.
+
+    Contents page: This should list the main chapters and (sub) sections of
+    your report. Choose self-explanatory chapter and section titles. If
+    possible you should include page numbers indicating where each
+    chapter/section begins. Try to avoid too many levels of subheading. Try if
+    possible to stick to sections and subsections; subsubsections are usually
+    avoidable.
+
+    Introduction: This is one of the most important components of the report.
+    It should begin with a clear statement of what the project is about so that
+    the nature and scope of the project can be understood by the reader. It
+    should summarise everything you set out to achieve, provide a clear summary
+    of the project's background and relevance to other work, and give pointers
+    to the remaining sections of the report that contain the bulk of the
+    technical material.
+
+    Background and related work: The background and related work section of the
+    report should set the project into context by relating it to existing
+    published work that you read at the start of the project when your approach
+    and methods were being considered. There are usually many ways of
+    approaching a given problem, and you should not just pick one at random.
+    Describe and evaluate as many alternative approaches as possible. The
+    published work may be in the form of research papers, articles, text books,
+    technical manuals, or even existing software or hardware of which you have
+    had hands-on experience. Do not be afraid to acknowledge the sources of
+    your inspiration; you are expected to have seen and thought about other
+    people's ideas, so your contribution largely will be putting them into
+    practice in some other context.
+
+    Body of report: The central part of the report typically consists of three
+    of four chapters detailing the technical work undertaken during the
+    project. The structure of these chapters is highly project dependent.
+    Usually they reflect the chronological development of the project, e.g.,
+    design, implementation, experimentation, and optimisation, although this is
+    not always the best approach. However you choose to structure this part of
+    the report, you should make it clear how you arrived at your chosen
+    approach in preference to the other alternatives documented in the
+    background. For implementation projects you should describe and justify the
+    design of your system at some high level, for example by using any of the
+    design methods taught during the first- and second-term courses, and should
+    document any interesting problems with, or features of, your
+    implementation. Integration and testing are also important to describe.
+    Your supervisor will advise you on the most suitable structure for these
+    middle sections.
+
+    Evaluation: All projects need to contain a serious and careful evaluation
+    of their results. The specifics of the evaluation method (e.g., user study,
+    experiments, formal proof review, etc.) are intrinsic to the nature of the
+    project, so this is something that you must discuss and agree with your
+    supervisor early in the project. Ideally, a presentation of the method and
+    results of your evaluation should be included in its own separate section
+    of the report.
+
+    Conclusions and future work: All good projects conclude with an objective
+    evaluation of the project's successes and failures, and suggestions for
+    future work that can take the project further. It is important to
+    understand that there is no such thing as a perfect project. Even the very
+    best pieces of work have their limitations and you are expected to provide
+    a proper critical appraisal of what you have done. Your assessors are bound
+    to spot the limitations of your work and you are expected to be able to do
+    the same.
+
+    Bibliography: This consists of a list of all the books, articles, manuals,
+    etc., used in the project and referred to in the report. You should provide
+    enough information to allow the reader to find the source. You should give
+    the full title and author, and you should state where it is published,
+    including full issue number, date, and page numbers where necessary. In the
+    case of a text book, you should quote the name of the publisher as well as
+    the author(s).
+
+    Appendices: Appendices contain information that is peripheral to the main
+    body of the report. Information typically included are things like program
+    listings, tables, proofs, graphs, or any other material that would break up
+    the theme of the text if it appeared in situ. Large program listings are
+    rarely required, and should be compressed as much as possible, e.g., by
+    printing in multiple columns and by using small font sizes, omitting
+    inessential detail.
+
+    User guide: For projects that result in a new piece of software, you should
+    provide a proper user guide providing easily understood instructions on how
+    to install and use it. A particularly useful approach is to treat the user
+    guide as a walk through of a typical session, or set of sessions, that
+    collectively display all the features of your software. Technical details
+    of how the software works is rarely required. Keep it concise and simple.
+    The extensive use of diagrams illustrating the software in action prove
+    particularly helpful. The user guide is sometimes included as a chapter in
+    the main body of the report, but is often better as an appendix to the main
+    report.
+
+    A note on ISOs and MRes research projects: Your MSc individual project must
+    be distinct from any ISO/MRes you previously conducted. The principle is
+    this: You cannot receive credit in both an ISO/MRes and the MSc individual
+    project for the same work (i.e., no "double dipping").
+
+    This does not mean your project must be in a different area, but it does
+    mean that it must be a significant extension in its own right. If your
+    ISO/MRes is related to the project, you must include within the project
+    report an explicit and detailed summary of the results of that ISO/MRes and
+    its relationship to the project. This summary should be approximately three
+    to five pages in length, and should be given as a subsection of the
+    background section.
+
+    A particular issue arises when your ISO/MRes contains, or is substantially,
+    a literature review that is relevant to your project. A summary of this can
+    be reproduced with attribution in the project report (most likely in the
+    background section). However, since the survey was assessed as part of your
+    ISO/MRes, it will not contribute to the assessment of your project. The
+    implication, then, is that your project and its report must compensate,
+    that is, by being more substantial in some other way, such as in the
+    ultimate result achieved or in the depth of the evaluation performed.
+
+    A note on plagiarism: Avoid plagiarism at all costs: If you take another
+    person's work as your own and do not cite your sources of
+    information/inspiration you are being dishonest; in other words you are
+    cheating. When referring to other pieces of work, cite the sources at the
+    point they are referred to or used, rather than just listing them at the
+    end. The College takes a very strict line on plagiarism; you are advised to
+    review the College's official plagiarism policy.
