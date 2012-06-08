@@ -1,0 +1,100 @@
+The term NoSQL which has become prominent over the last number of years, especially for large scale data. The term is more regularly used to describe what these systems are not, rather than defining their attributes. NoSQL encapsulates a number of categories of database including but not limited to triple store, graph database, object database and key-value stores. Key-value stores are typically described as being a storage substrate, they typically offer a minimal API consisting of Put(key, value), Get(key) and Delete(key) operations.
+
+Key-value stores typically lack relational concepts, offer no ACID\cite{acid} (atomicity, consistency, independence and durability) guarantees and do not rely on fixed schemas.  
+
+Below we will look at some of the major key-value store implementations and how they address intra-site consistency if at all.
+
+\subsection{Consistency}
+The CAP theorem\cite{cap} discusses three attributes of distributed systems, consistency, availability and partition tolerance. It states that a distributed system may only guarantee two of these three attributes. In order to maintain ACID properties relational databases are (CAp) consistent and available but not partition tolerant. NoSQL systems on the other hand value availability and partition tolerance (cAP), in essence meaning that a client will always retrieve a value in the face of network failures but that value may not be timely these systems are described as being `eventually consistent'.
+
+Eventually consistent systems generally utilise a mechanism such as vector clocks to determine the order in when updates are applied. In cases where the key-value store is unable to determine the consistency of an object it will simply return both to the client. This mechanism offloads consistency resolution to the application developer. 	
+
+
+\subsection{BigTable and GFS}
+Google have been a pioneer of scaling-out extremely large storage and compute infrastructure on commodity hardware and have published a number of papers documenting aspects of infrastructure including Google File System (GFS)\cite{googFS}, MapReduce\cite{googMapReduce}, Chubby\cite{googChubby} and Bigtable\cite{googBigTable}. Google's success with this approach sparked academic and commercial interest in exploiting commodity hardware for large systems. 
+
+Google's large scale structured data store Bigtable utilises GFS for storage of immutable SSTable files and Chubby for distributed lock management. Chubby assumes each client node is connected over a high speed low latency link, if chubby becomes unavailable so does BigTable. It utilises Paxos\cite{paxos} for achieving consensus in unreliable environments.
+
+Bigtable is described as being a sparse, distributed, persistent multi-dimentional sorted map, which maps $\{rowID, colID, time\} \Rightarrow \{value\}$. Rows are grouped into tables, which are used to a form a unit of distribution and load balancing. There may be an unbounded number of columns per row and they may be added at any time.
+
+Changes to the tablet are stored in memory and written to a log file, once there are a sufficient number of changes a new immutable SSTable file may be written, tablets are typically 1GB in size. This mechanism enables GFS to manage distribution and replication of the stored data. 
+
+Both Bigtable and GFS papers do not discuss cross site replication, although rack level awareness is discussed.
+
+\subsection{PNUTS}
+Yahoo's PNUTS\cite{pnuts, pnutsVid} is a multi-tenant distributed structured data store much like Google’s Bigtable. 
+
+Based on a hierarchical design with a tablet controller (index of tablet ranges), routers (caches of tablet ranges), storage units (containing multiple tablets). It supports both distributed hash tables and distributed ordered tables. Ordered tables provide the ability to perform fast range scans but makes it more difficult to perform load balancing across tablets and storage units. Data in each storage unit is is stored it in a pluggable persistence module, with Yahoo stating MySQL being most commonly used.
+
+PNUTS is one of the few systems that discuss explicit multi-site replication. Multi-site support is designed around a external message broker (custom Yahoo publish/subscribe system) used to perform asynchronous replication across sites and as a redo log for applying ordered updates. The databases consistency guarantees are achieved through guarantees provided by the message broker.
+
+Each tablet has an associated publish/subscribe topic, each write to a tablet is propagated to the message bus. As the message broker provides delivery guarantees the node written to can return to the client without waiting from a response from remote sites.
+
+Selective replication allows designers to determine which remote sites should contain replicas controlling availability and data locality. This replication can be controlled statically or dynamically. Dynamic creates replicas in sites where a record is read and likewise evicting replicas from sites where records are not read. The mechanism is lease based, the lease is updated on each read and evicts replicas once the lease expires. Strangely local replication is not discussed.
+
+PNUTS offers clients two levels of consistency, timeline based which was implemented early on and later support eventual consistency was added. Timeline consistency ensures each record has a master region which is a tablet in a particular site, each update to that record must be handled by the master region. Competing updates/inserts are serialised and applied by the master region. Network issues could cause inserts and updates to fail. The publish/subscribe system guarantees the order applied to the updates locally would be replicated on remote nodes. The eventual consistency mechanism is based on ensuring the latest write to a field wins at any site.
+
+\subsection{Distributed hash tables}
+Distributed hash tables became popular in the design of peer-to-peer systems due to their decentralised nature. This decentralised nature also appealed to designers of internet services as they are less prone to single points of failure and are scalable.
+
+Using a DHT is a simple mechanism to map responsibility for storage over nodes in a distributed system. Each new node joining the system is assigned responsibility for a particular range within the address space. Typically the space is of order $2^{128}$ which is arranged into a circular space, where 0 and $2^{128}-1$ are adjacent addresses. 
+
+Much research has taken place in this area especially in routing, redundancy and availability. Pastry\cite{pastry} and Chord\cite{chord} were early DHT which solidified concepts used in the development of distributed key-value stores.
+
+
+\subsection{Dynamo}
+In 2007 Amazon released a paper documenting Dynamo\cite{amazonDynamo} a distributed key-value store which they developed and deployed internally. This paper has become an important reference for developing distributed systems of this nature. Dynamo pushes Google's distributed concept even further by removing hierarchical components and utilising a distributed hash table (DHT) to map data over a cluster of nodes. Additionally Dynamo is self contained not relying on external services.
+
+Dynamo was designed to be high performance to fit with internal service level agreements (SLA's) for components within Amazon. To minimise lookup times Dynamo is a zero hop DHT, meaning that each node stores a complete forwarding table to each virtual node in the DHT. Clients may also make use of a partition-aware client library which also stores a complete forwarding table or simply rely on a load balancer to distribute queries across the nodes.
+
+Dynamo was built to be failure tolerant, utilising replication and partitioning while maintaining consistency with a quorum of nodes. Vector clocks are used to provide object versioning, but in the case an objects history cannot be fully determined may also use application-assisted conflict resolution. Nodes communicate utilising a gossip protocol which communicates perceived failures, new nodes and each nodes consistency state. Persistence in Dynamo is provided through pluggable modules, either storing in memory or writing to disk - depending on the application.
+
+Dynamo utilises two mechanisms to help maintain consistency, hinted handoff and an anti-entropy protocol. Hinted handoff is a mechanism that enables nodes that are temporarily down to recover quickly, `hints' which are the changes to an object are saved in replica nodes which are written back to the faulty node once it recovers. The anti-entropy protocol employs a technique called Merkle trees, a Merkle tree is a hash tree where leaves are hashes of values of individual keys and nodes higher up the tree are hashes of their respective children. This enables the protocol to quickly identify which nodes need to be synchronised. Hinted handoff is used to recover from transient failures while the anti-entropy protocol is used to recover from more serious failures.
+
+Finally Dynamo’s replication and consistency is configurable, enabling tuning for various application requirements. Among the configurable values are  N, R and W, N is the number of replicas, R is the read quorum and W is the write quorum. Decreasing R or W increases the chance of inconsistency but increases the response times. This enables Dynamo to be tuned for read or write workloads.
+
+Replication across site is not discussed in the scope of the paper.
+
+\subsection{Cassandra}
+In 2008 Facebook released Cassandra\cite{cassandra} which took many of Dynamo's distributed concepts such as the all nodes being equal, the gossip protocol and configurable consistency to provide a column oriented data store like Bigtable. Google in the Bigtable paper noted that this $\{rowID, colID, time\}$ keying enabled a much richer platform enabling multiple products to use the same data in the datastore. 
+
+Unlike the Dynamo and Bigtable the Cassandra paper discusses rack awareness, enabling the system to store replicas outside of the rack to mitigate rack failure. The Apache Cassandra website discusses site awareness without much detail, but Datastax a company offering support has some documentation on configuration although design documentation is quite sparse.
+
+Pluggable modules called a `snitch' are used for locating nodes and routing requests as well as deciding placement strategies within a site or across multiple sites. The placement strategies determine if each site simply replicates a cluster or if it becomes an unique part of the cluster, adding to the overall storage ability\footnote{\url{http://www.datastax.com/docs/1.0/cluster_architecture/replication}}. A number of modules exist for simple replication, rack and site awareness and even support for replication across Amazon EC2 infrastructure.
+
+When Facebook was implementing a new feature based around messaging, they chose to not use Cassandra but instead use HBase which offers similar functionality\footnote{\url{https://www.facebook.com/note.php?note_id=454991608919}}.
+
+\subsection{Riak}
+Like Cassandra, Riak\cite{riak} is implementation citing Dynamo as its influences, but staying much closer to the Amazon design. It is a masterless, fault-tolerant distributed key-value store. In addition to the basic Dynamo concepts, Riak also offers a MapReduce framework, full text search and other query techniques to the user. 
+
+Riak is an open source offering created by Basho who offer additional functionality and support for a fee. Multi-site replication in Riak is only available through the pay for enterprise version\footnote{\url{http://basho.com/products/riak-enterprise/}}. Due to this implementation details of multi-site support are not available for Riak.
+
+\subsection{Voldemort}
+Voldemort\cite{voldemort} is an active open source project initially developed and currently in use by Linkedin. Like Riak, Voldemort is an implementation based on Amazon’s Dynamo paper, it is a key-value store with replication, partitioning and basic querying capabilities.
+
+Linkedin use Voldemort to serve terabytes of precomputed (read only) data  and has “been running it in production at LinkedIn since 2008, and it’s currently distributed across data centers serving tens of thousands of requests per second”\footnote{\url{http://engineering.linkedin.com/technology}}.
+
+Voldemort nodes detect failures by temporarily banning nodes that do not meet a predefined service level agreement, for example nodes need to serve 99\% of requests in 100ms\cite{voldemortSLA}. While this simple failure detector is useful for performance analysis and defining a SLA for the service as a whole, however if we aim to scale past a single site this type of failure detector would need to be augmented. Linkedin acknowledge this issue\cite{voldemortSLA} noting that latencies maybe be 10 to 100x greater depending on geography, in these cases version conflicts are resolved by the application.
+
+An alternative failure detector based on the number of successes and failures during a sliding window had been added to the system more recently.
+
+Information on the current level of multi data center support is unclear, the project website discusses multi site support available through pluggable data placement strategies. In a 2010 mailing list message feature was described as being complete with a link to test results\footnote{\url{https://github.com/voldemort/voldemort/wiki/multi-datacenter-results}}. The approach tested was to develop the concept of zones with each zone represents a cluster of nodes with low latency.
+
+At this time it is unclear if this functionality has been included in the main project tree.
+
+On the Quora.com\footnote{\url{http://www.quora.com/HBase/What-are-the-main-differences-between-hbase-and-voldemort}}, Alex Feinberg a developer who worked on Voldemort describes multi site replication:
+\begin{quote}
+ Voldemort uses topology aware routing strategies for cross-datacenter replication (allowing quorum reads/writes within a single datacenter, but purely asynchronous writes to a remote datacenter -- doing quorums across the US contintent is fairly impractical for most applications), with a store-and-forward mechanism to handle WAN link failures
+\end{quote}
+However this functionality could be a proprietary module not released by Linkedin.
+
+\subsection{Observations}
+Key-value stores have become a valuable structured storage component in the data center along with MapReduce for compute and distributed blob/file storage. Organisations need to span multiple data centers to minimise latency for geographically dispersed users, maximize service availability and in some scenarios partition data that is too large to be stored in a single site.
+
+Companies such as Google, Basho, Yahoo and Amazon appear to be keen to keep intra-site replication strategies proprietary. Yahoo for example have not released any details of their message broker technology, which provides the underlying replication for PNUTS.
+
+Voldemort, Dynamo and Bigtable were all designed by their creators to solve particular problems and to fit in a specific location in their technology stacks. These design decision will make it difficult to directly compare some stores.
+
+GFS for Bigtable and Yahoo's message broker for PNUTS help with intra-site replication or at least offloads it to another layer. Dynamo and dynamo inspired systems do not have the same luxury.
+
+Providing consistency across multiple sites is difficult and conflict resolution may be impossible in some cases. PNUTS timeline consistency used the concept of a master region to resolve conflicts on a per entry basis, but this solution reduces the performance and availability of the system. 

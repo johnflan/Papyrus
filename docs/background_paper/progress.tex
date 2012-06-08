@@ -1,0 +1,14 @@
+\subsection{To date}
+To date much of the project time has been spent gaining an understanding of NoSQL and key-value store landscape in order direct the project. The lack of official documentation in many of the projects has proven to be troublesome, additionally understanding if documentation from other sources such as presentations, and blogs was timely and correct can be painstaking.
+
+Multi-site replication was chosen as its omission was noted in many of the systems documentation and published material. Some of this is simply due to bad documentation, but there also appears to be an unwillingness for large organisations to publicly discuss intra-site replication. Additionally academic research in this area appears to be quite minimal given that it is such an important topic.
+
+\subsection{Approach}
+In this initial report, it has been attempted to document the current state of multi-site replication in the predominant key-value systems. This is not conclusive as uncovering information proved difficult.
+
+The next step is to select and configure a key-value store for a multi-site environment. The multi-site environment will have to simulate link bandwidth and latencies in order to understand how various configurations affect time to consistency. This simulation can be performed remotely using a service such as Emulab\footnote{\url{http://www.emulab.net/}} or locally with virtualisation and link emulation tools.
+
+Currently Voldemort or Cassandra seems like a good candidates for testing as they have pluggable placement strategies, however a final decision has not yet been made.
+
+Once multi-site replication is running in the test environment and its operation is understood. Augmentation of the techniques used with concepts from other systems with the view to maximising time to consistency over links of varying condition.
+

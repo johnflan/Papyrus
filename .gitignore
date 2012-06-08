@@ -11,3 +11,10 @@
 ## java specific
 *.class
 bin/
+
+## latex specific
+*.log
+*.toc
+*.aux
+*.out
+*.pdf

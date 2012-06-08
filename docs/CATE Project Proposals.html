@@ -1,0 +1,54 @@
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+<title>CATE Project Proposals</title>
+<link type="image/gif" rel="SHORTCUT ICON" href="icons/favcate3.gif" />
+<link rel="stylesheet" type="text/css" href="projects.css" />
+<script type="text/javascript">//<![CDATA[
+var newwindow;
+
+function poptastic(url,name)
+{
+    newwindow=window.open(url,name,"width=850,height=600,top=20,left=120,scrollbars=yes");
+    newwindow.focus();
+}
+
+//]]></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+  <table border="0" width="100%">
+  <tr>
+  <td align="top" width="25%">
+  <table border="0" width="100%">
+    <tr><td valign="top"><b style="font-family: sans-serif;letter-spacing: -2px;color: #3377AA;font-size: 180%">Imperial College</b></td></tr>
+    <tr><td valign="top"><b style="font-family: sans-serif;letter-spacing: -2px;color: #95B9D0;font-size: 180%">London</b></td></tr>
+  </table>
+  </td>
+  <td align="top" width="50%">
+  <table border="0" width="100%">
+    <tr><td align="center" valign="top"><b style="font-family: sans-serif;letter-spacing: -2px;color: #3377AA;font-size: 180%">Department of Computing</b></td></tr>
+    <tr><td align="center" valign="top"><b style="font-family: sans-serif;letter-spacing: -2px;color: #95B9D0;font-size: 180%">MSc Individual Projects &nbsp;-&nbsp; 2011-2012</b></td></tr>
+    <tr><td align="center"><i>Page created on: Wed May 30 16:18:34 BST 2012</i></td></tr>
+  </table>
+  </td>
+  <td width="25%" valign="center" align="right">
+  <img src="icons/tiger.jpg" title="downloaded from U.S. Fish & Wildlife Service">
+  </td>
+  </tr>
+  </table>
+  <br><hr>
+<center>
+           <h1>Project Proposal</h1>
+           </center><b>Proposer:</b> Pietzuch, Peter (prp) - Academic
+           <p>
+           <b>Title:</b> A Scalable Distributed Object Store
+           <p>
+           <b>Offered to:</b><br><font color="blue"><b>523</b></font> - MAC Individual Project<br><font color="blue"><b>542</b></font> - MSc Computing Science (Specialist) Individual Project - M.Sc in Computing  (Distributed Systems) - pcsds5<br><font color="blue"><b>542</b></font> - MSc Computing Science (Specialist) Individual Project - M.Sc in Computing  (Software Engineering) - pcsse5<br><font color="blue"><b>543</b></font> - MRes Individual Project
+           <hr>
+           <b>Description:</b> <br><p>Global web applications (eg Facebook and Youtube) must store a large amount of user-generated content such as photos and videos and retrieve it quickly based on user requests. For example, Facebook must handle 60 terabytes of new image data each week. Web applications use specialised databases that act as <em>distributed object stores</em> for storing and retrieving this data.</p><br><br><p>The scalability and performance of object stores often becomes a bottleneck that governs the performance of the entire web application. As a result, object stores use sophisticated caching mechanism to reduce disk I/O and custom storage layout of data on disks to minimise the number of disk seeks. While a number of designs for scalable object stores have been proposed by researchers, it is an open problem to consider a store that spans multiple data centre locations efficiently. </p><br><br><h2>Project Goals</h2><br><br><p>The goal of this project is to design, implement and evaluate a distributed object store that can be deployed across multiple data centres. The object store should possess the following key features:</p><br><br><ol><br><li><b>Caching</b>: it should aggressively cache user-requested content to avoid disk accesses;</li><br><li><b>Custom data layout</b>: it should lay out objects on disk in a custom fashion, for example, inspired by log-structured file systems; this will avoid multiple disk accesses when retrieving a single object;</li><br><li><b>Data partitioning</b>: it should partition objects between two (or more sites) and intelligently load-balance requests between them.<br></ol><br><br><h2>Roadmap</h2><br><br><p>First, you will conduct a literature survey of existing designs of distributed objects stores. Based on this, you will identify short-comings of currently proposed architectures when they are deployed across a small number of data centres. </p><br><br><p>Second, this should lead to a design of an object store that provides good performance in a multi-site setting. A challenge in this context will be decide on a caching strategy and on a load-balancing mechanism that assign web clients to data centres. This may involve making clients more intelligent when choosing servers to send requests to (eg using JavaScript, HTML5 etc).</p><br><br><p>Finally, you should implement the complete system together with a simple, web-based workload generator and carry out an experimental evaluation. This could be done using a local cluster test-bed here at Imperial where you simulate a WAN links between machines, or using a second data centre location overseas. We could also provide resources for a cloud deployment on Amazon EC2.</p><br><br><h2>Skills</h2><br><br><ul><br><li>Strong programming skills related to the implementation of distributed applications; familiarity with low-level message passing code</li><br><li>Interest in large-scale application design and load-balancing algorithms</li><br><li>Interest in experimental systems evaluation using Internet test-beds</li><br></ul><br><br><h2>Further Reading</h2><br><br><ul><br><li>Doug Beaver, Sanjeev Kumar, Harry C. Li, Jason Sobel, and Peter Vajgel, Facebook Inc., <b>"Finding a Needle in Haystack: Facebook's Photo Storage"</b>, In OSDI'10, Oct 2010</li><br><br><li>E. K. Lee and C. A. Thekkath. <b>"Petal: distributed virtual disks"</b>, In ASPLOS-VII: Proceedings of the seventh international conference on Architectural support for programming languages and<br>operating systems, pages 84–92, New York, NY, USA, 1996. ACM.</li><br><br><li>M. Rosenblum and J. K. Ousterhout, <b>"The design and implementation of a log-structured file system"</b>, ACM Trans. Comput. Syst., 10(1):26–52, 1992.</li><br></ul><br><br><h3>Information Meeting</h3><br><br><p><em>If you are interested in this project, you have to attend one of the <a href="http://www.doc.ic.ac.uk/~prp/indv_proj_meetings">information meetings</a> that I run.</em></p><br><hr /> <p> <center><a href="javascript:self.close()" title="Close this window"> <img src="icons/close.gif" border="0"> </a></center>
+</body>
+</html>

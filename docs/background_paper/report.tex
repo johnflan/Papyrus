@@ -1,0 +1,60 @@
+
+\documentclass[a4paper,11pt]{article}
+\usepackage[left=2.5cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{anysize}
+\usepackage[pdftex]{graphicx}
+\usepackage{subfigure}
+\usepackage[hyphens]{url}
+\usepackage{textcomp}
+\usepackage{wrapfig}
+\usepackage{fixltx2e}
+\usepackage{color}
+\usepackage{fancyhdr}
+\usepackage[nodayofweek]{datetime}
+\usepackage[small,compact]{titlesec}
+\usepackage[pdfborder=0]{hyperref}
+\longdate
+
+
+
+\setlength{\parskip}{10pt} 
+\setlength\parindent{0pt}
+\pagestyle{fancyplain}
+\fancyhf{}
+
+\lhead{\fancyplain{}{M.Sc.\ Individual Project Report}}
+\rhead{\fancyplain{}{\today}}
+\cfoot{\fancyplain{}{\thepage}}
+
+
+\title{Distributed key-value stores in multi-site environments}
+\author{John Flanagan \\ jf311@doc.ic.ac.uk\\ \\
+       \small{Supervisor: Dr.\ Peter Pietzuch}\\
+}
+
+\begin{document}
+\maketitle
+\pagebreak
+\tableofcontents
+\pagebreak
+
+\section{Project description}
+	\input{introduction}
+
+\pagebreak
+\section{Distributed key-value stores}
+	\input{distributed_kv_stores}
+
+
+\pagebreak
+\section{Progress}
+	\input{progress}
+
+\pagebreak	
+\section{References}
+	\vspace{-20pt}
+	\def\refname{}
+	\bibliography{references}
+	\bibliographystyle{plain}
+
+\end{document}
